@@ -1,0 +1,50 @@
+{	
+	"error": "Error",
+
+	"info": "Info",
+
+	"done": "Done",
+
+	"email": "E-Mail:",
+
+	"password": "Password:",
+
+	"mail": "Mail",
+
+	"options": "Options",
+
+	"close": "Close",
+
+	"language": "Language",
+
+
+	"auth-error-type2": "Authentication error!",
+
+	"send-error": "Cannot send the e-mail!",
+
+	"auth-error-type1": "You need to set an e-mail account!",
+
+
+	"mail-sent": "Mail sent!",
+
+	"apply-language": "Restart the program for see changes.",
+
+
+	"account-settings": "Account settings",
+
+
+	"add-attachment": "Attach...",
+
+	"send-with-attachment": "Send with attachment",
+
+	"send": "Send",
+
+	"remove-attachment": "Remove attachment",
+
+
+	"to": "To:",
+
+	"subject": "Subject:",
+
+	"message": "Message:"
+}

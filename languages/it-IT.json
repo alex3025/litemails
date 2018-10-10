@@ -1,0 +1,50 @@
+{	
+	"error": "Errore",
+
+	"info": "Info",
+
+	"done": "Fatto",
+
+	"email": "E-Mail:",
+
+	"password": "Password:",
+
+	"mail": "Mail",
+
+	"options": "Opzioni",
+
+	"close": "Chiudi",
+
+	"language": "Lingua",
+	
+
+	"auth-error-type2": "Errore di autenticazione!",
+
+	"send-error": "Non riesco ad inviare l'e-mail!",
+
+	"auth-error-type1": "Devi impostare l'account di posta!",
+
+
+	"mail-sent": "E-Mail inviata!",
+
+	"apply-language": "Riavvia il programma per vedere le modifiche!",
+
+
+	"account-settings": "Impostazioni account",
+
+
+	"add-attachment": "Allega...",
+
+	"send-with-attachment": "Invia con allegato",
+
+	"send": "Invia",
+
+	"remove-attachment": "Rimuovi allegato",
+
+
+	"to": "A:",
+
+	"subject": "Oggetto:",
+
+	"message": "Messaggio:"
+}
