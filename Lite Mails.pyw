@@ -16,6 +16,9 @@ from email import encoders
 global file
 file = None
 
+global toopen
+toopen = None
+
 # Inizializzazione database
 db = sqlite3.connect("config.db")
 c = db.cursor()
@@ -23,7 +26,7 @@ c = db.cursor()
 # Inizializzazione finestra
 window = Tk()
 
-window.title(('Lite Mails v1.0')) # Titolo finestra
+window.title(('Lite Mails v1.1')) # Titolo finestra
 window.geometry('460x435') # Dimensione finestra
 window.resizable(False, False) # Blocco ridimensionamento
 
@@ -31,6 +34,9 @@ window.style = Style()
 window.style.theme_use('vista')
 
 langsel = IntVar()
+
+destination = StringVar()
+subject = StringVar()
 
 try:
 	# Controllo del database
@@ -85,8 +91,77 @@ class message_handler: # Gestione messaggi
 	def apply_language():
 		messagebox.showinfo(string['info'], string['apply-language'])
 
+def save_email(): # Salvataggio email
+	if not os.path.isdir("emails"):
+		os.makedirs("emails")
+
+	tosave = filedialog.asksaveasfile(defaultextension="*.litemail", initialdir="emails", title=string['save-email'], filetypes=[('E-Mail', "*.litemail")])
+
+	if tosave is None:
+		return
+
+	template = ("""{0}
+{1}
+{2}
+-""").format(destination.get(), subject.get(), msg_input.get('1.0', 'end-1c'))
+
+	tosave.write(str(template))
+	tosave.close()
+
+	print('Email saved!')
+
+def open_email():
+	global toopen
+	toopen = filedialog.askopenfilename(initialdir="emails", title=string['open-email'], filetypes=[("E-Mail", "*.litemail")])
+	if toopen == '':
+		return
+	with open(toopen, 'r') as openedfile:
+		def clear():
+			dest_input.delete(0, 'end')
+			sub_input.delete(0, 'end')
+			msg_input.delete('1.0', 'end')
+			dest_input.insert(0, openedfile.readline().strip())
+			sub_input.insert(0, openedfile.readline(62).strip())
+			lines = openedfile.readlines()
+			msg_input.insert('1.0', (''.join(lines[0:-1])).strip())
+		if msg_input.get('1.0', 'end-1c') or destination.get() or subject.get():
+			quitquestion = messagebox.askyesnocancel(string['open-email'], string['quit-message'])
+			if quitquestion is True:
+				save_email()
+				clear()
+			elif quitquestion is False:
+				clear()
+			elif quitquestion is None:
+				pass
+		elif msg_input.get('1.0', 'end-1c') and destination.get() and subject.get() in open(toopen, 'r').read():
+			clear()
+		else:
+			clear()
+
 def close_program(): # Funzione per chiudere il programma
-	window.destroy()
+	if toopen:
+		if msg_input.get('1.0', 'end-1c') and destination.get() and subject.get() in open(toopen, 'r').read():
+			window.destroy()
+		else:
+			quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
+			if quitquestion is True:
+				save_email()
+				window.destroy()
+			elif quitquestion is False:
+				window.destroy()
+			elif quitquestion is None:
+				pass
+	elif msg_input.get('1.0', 'end-1c') or destination.get() or subject.get():
+		quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
+		if quitquestion is True:
+			save_email()
+			window.destroy()
+		elif quitquestion is False:
+			window.destroy()
+		elif quitquestion is None:
+			pass
+	else:
+		window.destroy()
 
 def account(): # Impostazioni account
 
@@ -220,12 +295,10 @@ def send_email(): # Funzione per inviare la mail
 
 # Oggetti
 
-destination = StringVar()
 dest_label = Label(window, text=string['to'], font=('Segoe UI', 13)).grid(row=0, pady=15, padx=5, sticky='w')
 dest_input = Entry(window, textvariable=destination, font=('Segoe UI', 10), width=45)
 dest_input.grid(row=0, column=1, pady=15, padx=5, sticky='w')
 
-subject = StringVar()
 sub_label = Label(window, text=string['subject'], font=('Segoe UI', 13)).grid(row=1, pady=5, padx=5, sticky='w')
 sub_input = Entry(window, textvariable=subject, font=('Segoe UI', 10), width=45)
 sub_input.grid(row=1, column=1, pady=5, padx=5, sticky='w')
@@ -253,6 +326,9 @@ menu_mail = Menu(menu_bar, tearoff=0)
 
 menu_bar.add_cascade(label=string['mail'], menu=menu_mail)
 
+menu_mail.add_command(label=string['save-email'], command=lambda: save_email())
+menu_mail.add_command(label=string['open-email'], command=lambda: open_email())
+menu_mail.add_separator()
 menu_mail.add_command(label=string['add-attachment'], command=lambda: add_attachment())
 
 # Menu lingue
@@ -268,8 +344,13 @@ menu_bar.add_cascade(label=string['options'], menu=menu_options)
 
 menu_options.add_command(label=string['account-settings'], command=lambda: account())
 menu_options.add_cascade(label=string['language'], menu=menu_languages)
+menu_options.add_separator()
 menu_options.add_command(label=string['close'], command=lambda: close_program())
 
 window.config(menu=menu_bar) # Aggiunge la barra dei menu
+
+window.iconbitmap('icon.ico') # Icona programma
+
+window.protocol("WM_DELETE_WINDOW", close_program) # Attiva funzione in caso di chiusura
 
 window.mainloop() # Genera l'interfaccia graficaz

@@ -17,6 +17,8 @@
 
 	"language": "Language",
 
+	"quit": "Quit",
+
 
 	"auth-error-type2": "Authentication error!",
 
@@ -29,11 +31,17 @@
 
 	"apply-language": "Restart the program for see changes.",
 
+	"quit-message": "There are compiled fields, do you want to save?",
+
 
 	"account-settings": "Account settings",
 
 
 	"add-attachment": "Attach...",
+
+	"save-email": "Save e-mail...",
+
+	"open-email": "Open e-mail...",
 
 	"send-with-attachment": "Send with attachment",
 

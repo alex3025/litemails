@@ -16,6 +16,8 @@
 	"close": "Chiudi",
 
 	"language": "Lingua",
+
+	"quit": "Esci",
 	
 
 	"auth-error-type2": "Errore di autenticazione!",
@@ -29,11 +31,17 @@
 
 	"apply-language": "Riavvia il programma per vedere le modifiche!",
 
+	"quit-message": "Ci sono dei campi compilati, vuoi salvarli?",
+
 
 	"account-settings": "Impostazioni account",
 
 
 	"add-attachment": "Allega...",
+
+	"save-email": "Salva e-mail...",
+
+	"open-email": "Apri e-mail...",
 
 	"send-with-attachment": "Invia con allegato",
 
