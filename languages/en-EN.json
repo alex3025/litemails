@@ -33,8 +33,14 @@
 
 	"quit-message": "There are compiled fields, do you want to save?",
 
+	"update-found": "There is an update avaiable! Do you want to install it?",
+
+	"no-update": "Lite Mails is updated to the last version!",
+
 
 	"account-settings": "Account settings",
+
+	"check-updates": "Check for updates",
 
 
 	"add-attachment": "Attach...",

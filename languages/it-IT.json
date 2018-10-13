@@ -33,8 +33,14 @@
 
 	"quit-message": "Ci sono dei campi compilati, vuoi salvarli?",
 
+	"update-found": "E' disponibile un aggiornamento! Vuoi installarlo?",
+
+	"no-update": "Lite Mails e' aggiornato all'ultima versione!",
+
 
 	"account-settings": "Impostazioni account",
+
+	"check-updates": "Controlla aggiornamenti...",
 
 
 	"add-attachment": "Allega...",

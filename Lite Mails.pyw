@@ -4,6 +4,8 @@ import sqlite3
 import json
 import smtplib
 import locale
+import requests
+import html2text as h2t
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
@@ -12,6 +14,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+
+version = "v1.2" # DO NOT CHANGE
 
 global file
 file = None
@@ -26,7 +30,7 @@ c = db.cursor()
 # Inizializzazione finestra
 window = Tk()
 
-window.title(('Lite Mails v1.1')) # Titolo finestra
+window.title('Lite Mails {}'.format(version)) # Titolo finestra
 window.geometry('460x435') # Dimensione finestra
 window.resizable(False, False) # Blocco ridimensionamento
 
@@ -49,9 +53,9 @@ except sqlite3.OperationalError:
 	print('Database not found: creating a new one...')
 	c.execute("CREATE TABLE account(email TEXT, password TEXT, id INTEGER)")
 	db.commit()
-	c.execute("CREATE TABLE settings(language TEXT, id INTEGER)")
+	c.execute("CREATE TABLE settings(language TEXT, version TEXT, id INTEGER)")
 	db.commit()
-	c.execute("INSERT INTO settings(language, id) VALUES(?,?)", (str(locale.getdefaultlocale()), 0))
+	c.execute("INSERT INTO settings(language, version, id) VALUES(?,?,?)", (str(locale.getdefaultlocale()), version, 0))
 	db.commit()
 	c.execute("INSERT INTO account(email, password, id) VALUES(?,?,?)", (None, None, 0))
 	db.commit()
@@ -73,6 +77,10 @@ elif 'it' in settings[0][0]:
 	with open("languages/it-IT.json", "r") as read_file:
 		string = json.load(read_file)
 		langsel.set(2)
+else:
+	with open("languages/en-EN.json", "r") as read_file:
+		string = json.load(read_file)
+		langsel.set(1)
 
 class message_handler: # Gestione messaggi
 
@@ -110,7 +118,7 @@ def save_email(): # Salvataggio email
 
 	print('Email saved!')
 
-def open_email():
+def open_email(): # Apertura emails
 	global toopen
 	toopen = filedialog.askopenfilename(initialdir="emails", title=string['open-email'], filetypes=[("E-Mail", "*.litemail")])
 	if toopen == '':
@@ -146,7 +154,6 @@ def close_program(): # Funzione per chiudere il programma
 			quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
 			if quitquestion is True:
 				save_email()
-				window.destroy()
 			elif quitquestion is False:
 				window.destroy()
 			elif quitquestion is None:
@@ -155,13 +162,47 @@ def close_program(): # Funzione per chiudere il programma
 		quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
 		if quitquestion is True:
 			save_email()
-			window.destroy()
 		elif quitquestion is False:
 			window.destroy()
 		elif quitquestion is None:
 			pass
 	else:
 		window.destroy()
+
+def check_for_updates(fromwhat=None): # Gestione aggiornamenti
+	
+	r = requests.get('http://alex3025.github.io/litemails.html')
+
+	version_to_install = h2t.html2text(r.text).strip()
+
+	if version < version_to_install:
+
+		uf = messagebox.askyesno(string['info'], string['update-found'])
+		if uf:
+			if toopen:
+				if msg_input.get('1.0', 'end-1c') and destination.get() and subject.get() in open(toopen, 'r').read():
+					os.system('cd "%ProgramFiles%\Lite Mails\"')
+					os.system('StartUpdate.exe')
+				else:
+					quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
+					if quitquestion is True:
+						save_email()
+					elif quitquestion is False:
+						os.system('cd "%ProgramFiles%\Lite Mails\"')
+						os.system('StartUpdate.exe')
+					elif quitquestion is None:
+						pass
+			elif msg_input.get('1.0', 'end-1c') or destination.get() or subject.get():
+				quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
+				if quitquestion is True:
+					save_email()
+				elif quitquestion is False:
+					os.system('cd "%ProgramFiles%\Lite Mails\"')
+					os.system('StartUpdate.exe')
+				elif quitquestion is None:
+					pass
+	elif fromwhat == 'menu':
+		messagebox.showinfo(string['info'], string['no-update'])
 
 def account(): # Impostazioni account
 
@@ -174,6 +215,8 @@ def account(): # Impostazioni account
 	accountwin.title(string['account-settings']) # Titolo finestra
 	accountwin.geometry('450x155') # Dimensione finestra
 	accountwin.resizable(False, False) # Blocco ridimensionamento
+
+	accountwin.iconbitmap('icons/icon.ico')
 
 	# Elementi finestra
 
@@ -344,13 +387,16 @@ menu_bar.add_cascade(label=string['options'], menu=menu_options)
 
 menu_options.add_command(label=string['account-settings'], command=lambda: account())
 menu_options.add_cascade(label=string['language'], menu=menu_languages)
+menu_options.add_command(label=string['check-updates'], command=lambda: check_for_updates('menu'))
 menu_options.add_separator()
 menu_options.add_command(label=string['close'], command=lambda: close_program())
 
 window.config(menu=menu_bar) # Aggiunge la barra dei menu
 
-window.iconbitmap('icon.ico') # Icona programma
+window.iconbitmap('icons/icon.ico') # Icona programma
 
 window.protocol("WM_DELETE_WINDOW", close_program) # Attiva funzione in caso di chiusura
+
+check_for_updates() # Controlla gli aggiornamenti
 
 window.mainloop() # Genera l'interfaccia graficaz
