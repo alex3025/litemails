@@ -181,15 +181,13 @@ def check_for_updates(fromwhat=None): # Gestione aggiornamenti
 		if uf:
 			if toopen:
 				if msg_input.get('1.0', 'end-1c') and destination.get() and subject.get() in open(toopen, 'r').read():
-					os.system('cd "%ProgramFiles%\Lite Mails\"')
-					os.system('StartUpdate.exe')
+					os.system(r'""%ProgramFiles%\Lite Mails\Updater.exe""')
 				else:
 					quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
 					if quitquestion is True:
 						save_email()
 					elif quitquestion is False:
-						os.system('cd "%ProgramFiles%\Lite Mails\"')
-						os.system('StartUpdate.exe')
+						os.system(r'""%ProgramFiles%\Lite Mails\Updater.exe""')
 					elif quitquestion is None:
 						pass
 			elif msg_input.get('1.0', 'end-1c') or destination.get() or subject.get():
@@ -197,10 +195,11 @@ def check_for_updates(fromwhat=None): # Gestione aggiornamenti
 				if quitquestion is True:
 					save_email()
 				elif quitquestion is False:
-					os.system('cd "%ProgramFiles%\Lite Mails\"')
-					os.system('StartUpdate.exe')
+					os.system(r'""%ProgramFiles%\Lite Mails\Updater.exe""')
 				elif quitquestion is None:
 					pass
+			else:
+				os.system(r'""%ProgramFiles%\Lite Mails\Updater.exe""')
 	elif fromwhat == 'menu':
 		messagebox.showinfo(string['info'], string['no-update'])
 
