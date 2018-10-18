@@ -1,0 +1,64 @@
+{	
+	"error": "Errore",
+
+	"info": "Info",
+
+	"done": "Fatto",
+
+	"email": "E-Mail:",
+
+	"password": "Password:",
+
+	"mail": "Mail",
+
+	"options": "Opzioni",
+
+	"close": "Chiudi",
+
+	"language": "Lingua",
+
+	"quit": "Esci",
+	
+
+	"auth-error-type2": "Errore di autenticazione!",
+
+	"send-error": "Non riesco ad inviare l'e-mail!",
+
+	"auth-error-type1": "Devi impostare l'account di posta!",
+
+
+	"mail-sent": "E-Mail inviata!",
+
+	"apply-language": "Riavvia il programma per vedere le modifiche!",
+
+	"quit-message": "Ci sono dei campi compilati, vuoi salvarli?",
+
+	"update-found": "E' disponibile un aggiornamento! Vuoi installarlo?",
+
+	"no-update": "Lite Mails e' aggiornato all'ultima versione!",
+
+
+	"account-settings": "Impostazioni account",
+
+	"check-updates": "Controlla aggiornamenti...",
+
+
+	"add-attachment": "Allega...",
+
+	"save-email": "Salva e-mail...",
+
+	"open-email": "Apri e-mail...",
+
+	"send-with-attachment": "Invia con allegato",
+
+	"send": "Invia",
+
+	"remove-attachment": "Rimuovi allegato",
+
+
+	"to": "A:",
+
+	"subject": "Oggetto:",
+
+	"message": "Messaggio:"
+}

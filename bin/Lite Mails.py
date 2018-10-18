@@ -1,21 +1,25 @@
 import os
+import sys
+import time
 import tkinter
 import sqlite3
 import json
 import smtplib
 import locale
 import requests
+import threading
 import html2text as h2t
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
 from tkinter.ttk import *
+from threading import Thread
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-version = "v1.2" # DO NOT CHANGE
+version = "v1.0" # DO NOT CHANGE
 
 global file
 file = None
@@ -53,9 +57,9 @@ except sqlite3.OperationalError:
 	print('Database not found: creating a new one...')
 	c.execute("CREATE TABLE account(email TEXT, password TEXT, id INTEGER)")
 	db.commit()
-	c.execute("CREATE TABLE settings(language TEXT, version TEXT, id INTEGER)")
+	c.execute("CREATE TABLE settings(language TEXT, id INTEGER)")
 	db.commit()
-	c.execute("INSERT INTO settings(language, version, id) VALUES(?,?,?)", (str(locale.getdefaultlocale()), version, 0))
+	c.execute("INSERT INTO settings(language, id) VALUES(?,?)", (str(locale.getdefaultlocale()), 0))
 	db.commit()
 	c.execute("INSERT INTO account(email, password, id) VALUES(?,?,?)", (None, None, 0))
 	db.commit()
@@ -81,6 +85,12 @@ else:
 	with open("languages/en-EN.json", "r") as read_file:
 		string = json.load(read_file)
 		langsel.set(1)
+
+if not os.path.isfile('version.txt'):
+	print('Created version file.')
+	with open('version.txt', 'w') as f:
+		f.write(version)
+		f.close()
 
 class message_handler: # Gestione messaggi
 
@@ -150,12 +160,14 @@ def close_program(): # Funzione per chiudere il programma
 	if toopen:
 		if msg_input.get('1.0', 'end-1c') and destination.get() and subject.get() in open(toopen, 'r').read():
 			window.destroy()
+			os._exit(0)
 		else:
 			quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
 			if quitquestion is True:
 				save_email()
 			elif quitquestion is False:
 				window.destroy()
+				os._exit(0)
 			elif quitquestion is None:
 				pass
 	elif msg_input.get('1.0', 'end-1c') or destination.get() or subject.get():
@@ -164,45 +176,12 @@ def close_program(): # Funzione per chiudere il programma
 			save_email()
 		elif quitquestion is False:
 			window.destroy()
+			os._exit(0)
 		elif quitquestion is None:
 			pass
 	else:
 		window.destroy()
-
-def check_for_updates(fromwhat=None): # Gestione aggiornamenti
-	
-	r = requests.get('http://alex3025.github.io/litemails.html')
-
-	version_to_install = h2t.html2text(r.text).strip()
-
-	if version < version_to_install:
-
-		uf = messagebox.askyesno(string['info'], string['update-found'])
-		if uf:
-			if toopen:
-				if msg_input.get('1.0', 'end-1c') and destination.get() and subject.get() in open(toopen, 'r').read():
-					os.system(r'""%ProgramFiles%\Lite Mails\Updater.exe""')
-				else:
-					quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
-					if quitquestion is True:
-						save_email()
-					elif quitquestion is False:
-						os.system(r'""%ProgramFiles%\Lite Mails\Updater.exe""')
-					elif quitquestion is None:
-						pass
-			elif msg_input.get('1.0', 'end-1c') or destination.get() or subject.get():
-				quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
-				if quitquestion is True:
-					save_email()
-				elif quitquestion is False:
-					os.system(r'""%ProgramFiles%\Lite Mails\Updater.exe""')
-				elif quitquestion is None:
-					pass
-			else:
-				os.system(r'""%ProgramFiles%\Lite Mails\Updater.exe""')
-	elif fromwhat == 'menu':
-		messagebox.showinfo(string['info'], string['no-update'])
-
+		os._exit(0)
 def account(): # Impostazioni account
 
 	global credentials
@@ -270,6 +249,59 @@ def language(lang): # Gestione lingua
 	user_choice = messagebox.askokcancel(string['info'], string['apply-language'])
 	if user_choice:
 		window.destroy()
+		os._exit(0)
+
+def check_for_updates(fromwhat=None): # Gestione aggiornamenti
+	
+	r = requests.get('http://alex3025.github.io/litemails.html')
+
+	version_to_install = h2t.html2text(r.text).strip()
+
+	class RunUpdaterScript(Thread):
+		def __init__(self):
+			Thread.__init__(self)
+			self.start()
+			window.destroy()
+			self._stop_event = threading.Event()
+		def stop(self):
+			self._stop_event.set()
+		def run(self):
+			os.chdir('..')
+			os.system('python Updater.py')
+
+	def run_updater():
+		db.commit()
+		db.close()
+		thread = RunUpdaterScript()
+		thread.stop()
+		os._exit(0)
+
+	if version < version_to_install:
+		uf = messagebox.askyesno(string['info'], string['update-found'])
+		if uf:
+			if toopen:
+				if msg_input.get('1.0', 'end-1c') and destination.get() and subject.get() in open(toopen, 'r').read():
+					run_updater()
+				else:
+					quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
+					if quitquestion is True:
+						save_email()
+					elif quitquestion is False:
+						run_updater()
+					elif quitquestion is None:
+						pass
+			elif msg_input.get('1.0', 'end-1c') or destination.get() or subject.get():
+				quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
+				if quitquestion is True:
+					save_email()
+				elif quitquestion is False:
+					run_updater()
+				elif quitquestion is None:
+					pass
+			else:
+				run_updater()
+	elif fromwhat == 'menu':
+		messagebox.showinfo(string['info'], string['no-update'])
 
 def add_attachment(): # Funzione per l'aggiunta dell'allegato
 
@@ -398,4 +430,4 @@ window.protocol("WM_DELETE_WINDOW", close_program) # Attiva funzione in caso di 
 
 check_for_updates() # Controlla gli aggiornamenti
 
-window.mainloop() # Genera l'interfaccia graficaz
+window.mainloop() # Genera l'interfaccia grafica
