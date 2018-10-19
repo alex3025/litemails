@@ -19,7 +19,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-version = "v1.0" # DO NOT CHANGE
+version = "v1.2" # DO NOT CHANGE
 
 global file
 file = None
