@@ -74,9 +74,13 @@ def update():
 		print('Version file not found! Cannot run updater!')
 		sys.exit()
 
-	r = requests.get('http://alex3025.github.io/litemails.html')
-
-	new_version = h2t.html2text(r.text).strip()
+	try:
+		r = requests.get('http://alex3025.github.io/litemails.html')
+		new_version = h2t.html2text(r.text).strip()
+	except:
+		print('No connection!')
+		sys.exit(0)
+		pass
 
 	if current_version < new_version:
 
@@ -166,6 +170,9 @@ def update():
 			print('Installed!')
 
 			gui.download_window.destroy()
+			os.chdir('bin')
+			os.system('Lite Mails.exe')
+			sys.exit(0)
 		except Exception as e:
 			print('Error when installing new version!')
 			print(e)

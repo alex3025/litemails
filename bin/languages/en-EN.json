@@ -19,12 +19,16 @@
 
 	"quit": "Quit",
 
+	"log": "Log",
+
 
 	"auth-error-type2": "Authentication error!",
 
 	"send-error": "Cannot send the e-mail!",
 
 	"auth-error-type1": "You need to set an e-mail account!",
+
+	"no-connection": "You need to be connected to internet!",
 
 
 	"mail-sent": "Mail sent!",
@@ -35,12 +39,14 @@
 
 	"update-found": "There is an update avaiable! Do you want to install it?",
 
-	"no-update": "Lite Mails is updated to the last version!",
+	"no-update": "No new version avaiable!",
 
 
-	"account-settings": "Account settings",
+	"account-settings": "Account settings...",
 
-	"check-updates": "Check for updates",
+	"check-updates": "Check for updates...",
+
+	"show-console": "Show log...",
 
 
 	"add-attachment": "Attach...",

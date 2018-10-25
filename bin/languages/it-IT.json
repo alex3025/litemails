@@ -18,6 +18,8 @@
 	"language": "Lingua",
 
 	"quit": "Esci",
+
+	"log": "Log",
 	
 
 	"auth-error-type2": "Errore di autenticazione!",
@@ -25,6 +27,8 @@
 	"send-error": "Non riesco ad inviare l'e-mail!",
 
 	"auth-error-type1": "Devi impostare l'account di posta!",
+
+	"no-connection": "Devi essere connesso ad internet!",
 
 
 	"mail-sent": "E-Mail inviata!",
@@ -35,12 +39,14 @@
 
 	"update-found": "E' disponibile un aggiornamento! Vuoi installarlo?",
 
-	"no-update": "Lite Mails e' aggiornato all'ultima versione!",
+	"no-update": "Nessuna nuova versione disponibile!",
 
 
-	"account-settings": "Impostazioni account",
+	"account-settings": "Impostazioni account...",
 
 	"check-updates": "Controlla aggiornamenti...",
+
+	"show-console": "Mostra log...",
 
 
 	"add-attachment": "Allega...",
