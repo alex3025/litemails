@@ -19,7 +19,11 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
+<<<<<<< HEAD
 version = "v1.3" # DO NOT CHANGE
+=======
+version = "v1.2" # DO NOT CHANGE
+>>>>>>> 9fda499d7881b119b34eb8ef1acc9cab63283bbe
 
 file = None
 toopen = None
