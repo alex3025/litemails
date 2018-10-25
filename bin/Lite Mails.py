@@ -19,11 +19,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-<<<<<<< HEAD
 version = "v1.3" # DO NOT CHANGE
-=======
-version = "v1.2" # DO NOT CHANGE
->>>>>>> 9fda499d7881b119b34eb8ef1acc9cab63283bbe
 
 file = None
 toopen = None
@@ -252,21 +248,6 @@ def language(lang): # Gestione lingua
 		window.destroy()
 		os._exit(0)
 
-def show_console():
-	if sys.stdout is None:
-		ctypes.windll.kernel32.AllocConsole()
-		inf = open('CONIN$')
-		ouf = open('CONOUT$', 'w')
-		os.dup2(inf.fileno(), 0)
-		os.dup2(ouf.fileno(), 1)
-		os.dup2(ouf.fileno(), 2)
-		sys.stdin = open(0)
-		sys.stdout = open(1, 'w')
-		sys.stderr = open(2, 'w')
-		os.system('@echo off')
-		os.system('title Lite Mails {}'.format(string['log']))
-		os.system('mode con: cols=50 lines=20')
-
 def check_for_updates(fromwhat=None): # Gestione aggiornamenti
 	
 	try:
@@ -442,7 +423,6 @@ menu_bar.add_cascade(label=string['options'], menu=menu_options)
 menu_options.add_command(label=string['account-settings'], command=lambda: account())
 menu_options.add_cascade(label=string['language'], menu=menu_languages)
 menu_options.add_command(label=string['check-updates'], command=lambda: check_for_updates('menu'))
-menu_options.add_command(label=string['show-console'], command=lambda: show_console())
 menu_options.add_separator()
 menu_options.add_command(label=string['close'], command=lambda: close_program())
 

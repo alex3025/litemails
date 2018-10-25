@@ -6,7 +6,7 @@ Lite Mails is a program that can send e-mail with attachments.
 ### Release v1.3
 * Fixed bugs
 * Added log
-* Fixed updater (For install new updater reinstall Lite Mails)
+* Added to updater things (OPTIONAL: If you want install new modifies reinstall Lite Mails)
 
 ### Release v1.2
 * Fixed bugs

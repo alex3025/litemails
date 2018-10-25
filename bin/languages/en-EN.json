@@ -19,8 +19,6 @@
 
 	"quit": "Quit",
 
-	"log": "Log",
-
 
 	"auth-error-type2": "Authentication error!",
 
@@ -45,8 +43,6 @@
 	"account-settings": "Account settings...",
 
 	"check-updates": "Check for updates...",
-
-	"show-console": "Show log...",
 
 
 	"add-attachment": "Attach...",

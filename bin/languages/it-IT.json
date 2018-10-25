@@ -18,8 +18,6 @@
 	"language": "Lingua",
 
 	"quit": "Esci",
-
-	"log": "Log",
 	
 
 	"auth-error-type2": "Errore di autenticazione!",
@@ -45,8 +43,6 @@
 	"account-settings": "Impostazioni account...",
 
 	"check-updates": "Controlla aggiornamenti...",
-
-	"show-console": "Mostra log...",
 
 
 	"add-attachment": "Allega...",
