@@ -19,6 +19,14 @@
 
 	"quit": "Quit",
 
+	"utility": "Utility",
+	
+	"date-time": "Date / Time",
+
+	"date": "date",
+
+	"time": "time",
+
 
 	"auth-error-type2": "Authentication error!",
 
@@ -35,21 +43,25 @@
 
 	"quit-message": "There are compiled fields, do you want to save?",
 
-	"update-found": "There is an update avaiable! Do you want to install it?",
+	"update-found": "Update found! Do you want to download and install it?",
 
-	"no-update": "No new version avaiable!",
+	"no-update": "No update found!",
 
 
 	"account-settings": "Account settings...",
 
+	"date-time-settings": "Date/Time format settings",
+
 	"check-updates": "Check for updates...",
 
 
-	"add-attachment": "Attach...",
+	"add-attachment": "Attachment...",
 
 	"save-email": "Save e-mail...",
 
 	"open-email": "Open e-mail...",
+
+	"insert": "Insert",
 
 	"send-with-attachment": "Send with attachment",
 
@@ -62,5 +74,14 @@
 
 	"subject": "Subject:",
 
-	"message": "Message:"
+	"message": "Message:",
+
+
+	"date-format-type1": "DD/MM/YYYY",
+
+	"date-format-type2": "DD-MM-YYYY",
+
+	"time-format-type1": "hh:mm:ss",
+
+	"time-format-type2": "hh:mm"
 }

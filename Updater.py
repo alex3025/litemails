@@ -9,6 +9,7 @@ import locale
 import time
 import urllib.request
 import html2text as h2t
+import tkinter.ttk as ttk
 from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import *
@@ -53,7 +54,7 @@ class Gui(threading.Thread):
 		self.download_window.style = Style()
 		self.download_window.style.theme_use('vista')	
 
-		self.pb = Progressbar(self.download_window, mode='determinate')
+		self.pb = ttk.Progressbar(self.download_window, mode='determinate')
 		self.pb.grid(ipadx=150, padx=15, pady=15, sticky='n')
 
 		self.lb = Label(self.download_window, text=string)
@@ -176,8 +177,10 @@ def update():
 		except Exception as e:
 			print('Error when installing new version!')
 			print(e)
+			sys.exit(0)
 	else:
 		print('No updates found!')
 		gui.download_window.destroy()
+		sys.exit(0)
 
 update()

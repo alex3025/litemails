@@ -18,6 +18,14 @@
 	"language": "Lingua",
 
 	"quit": "Esci",
+
+	"utility": "Strumenti",
+
+	"date-time": "Data / Ora",
+	
+	"date": "data",
+
+	"time": "ora",
 	
 
 	"auth-error-type2": "Errore di autenticazione!",
@@ -35,21 +43,25 @@
 
 	"quit-message": "Ci sono dei campi compilati, vuoi salvarli?",
 
-	"update-found": "E' disponibile un aggiornamento! Vuoi installarlo?",
+	"update-found": "Aggiornamento trovato! Vuoi scaricarlo ed installarlo?",
 
-	"no-update": "Nessuna nuova versione disponibile!",
+	"no-update": "Nessun nuovo aggiornamento disponibile!",
 
 
 	"account-settings": "Impostazioni account...",
 
+	"date-time-settings": "Impostazioni formato data/ora",
+
 	"check-updates": "Controlla aggiornamenti...",
 
 
-	"add-attachment": "Allega...",
+	"add-attachment": "Allegato...",
 
 	"save-email": "Salva e-mail...",
 
 	"open-email": "Apri e-mail...",
+
+	"insert": "Inserisci",
 
 	"send-with-attachment": "Invia con allegato",
 
@@ -62,5 +74,14 @@
 
 	"subject": "Oggetto:",
 
-	"message": "Messaggio:"
+	"message": "Messaggio:",
+
+
+	"date-format-type1": "DD/MM/YYYY",
+
+	"date-format-type2": "DD-MM-YYYY",
+
+	"time-format-type1": "hh:mm:ss",
+
+	"time-format-type2": "hh:mm"
 }
