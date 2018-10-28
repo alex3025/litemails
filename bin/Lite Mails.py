@@ -49,7 +49,7 @@ subject = StringVar()
 email = StringVar()
 password = StringVar()
 
-updater_file = 'Updater.exe'
+updater_file = 'python Updater.py'
 
 try:
 	c.execute("SELECT email, password FROM account")
