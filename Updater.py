@@ -49,7 +49,7 @@ class Gui(threading.Thread):
 		self.download_window.title('Lite Mails Updater')
 		self.download_window.geometry('430x100')
 		self.download_window.resizable(False, False)
-		self.download_window.iconbitmap('update.ico')
+		self.download_window.iconbitmap('updater.ico')
 
 		self.download_window.style = Style()
 		self.download_window.style.theme_use('vista')	
@@ -173,6 +173,7 @@ def update():
 			gui.download_window.destroy()
 			os.chdir('bin')
 			os.system('Lite Mails.exe')
+			gui.stop()
 			sys.exit(0)
 		except Exception as e:
 			print('Error when installing new version!')
@@ -180,7 +181,6 @@ def update():
 			sys.exit(0)
 	else:
 		print('No updates found!')
-		gui.download_window.destroy()
 		sys.exit(0)
 
 update()

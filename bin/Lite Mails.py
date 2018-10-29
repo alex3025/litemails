@@ -49,8 +49,6 @@ subject = StringVar()
 email = StringVar()
 password = StringVar()
 
-updater_file = 'Updater.exe'
-
 try:
 	c.execute("SELECT email, password FROM account")
 	credentials = list(c.fetchall())
@@ -285,7 +283,7 @@ def check_for_updates(fromwhat=None): # Gestione aggiornamenti
 			self._stop_event.set()
 		def run(self):
 			os.chdir('..')
-			os.system(updater_file)
+			os.system('python Updater.py')
 
 	def start_updating():
 		db.commit()
