@@ -49,11 +49,6 @@ subject = StringVar()
 email = StringVar()
 password = StringVar()
 
-<<<<<<< HEAD
-=======
-updater_file = 'python Updater.py'
-
->>>>>>> cf778c513c18a768aa01917a22fd7700b0a58570
 try:
 	c.execute("SELECT email, password FROM account")
 	credentials = list(c.fetchall())
