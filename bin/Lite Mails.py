@@ -24,10 +24,6 @@ print('Starting Lite Mails {} \n'.format(version))
 file = None
 toopen = None
 
-# Inizializzazione database
-db = sqlite3.connect("config.db")
-c = db.cursor()
-
 # Inizializzazione finestra
 window = Tk()
 
@@ -49,52 +45,179 @@ subject = StringVar()
 email = StringVar()
 password = StringVar()
 
-<<<<<<< HEAD
-=======
-updater_file = 'python Updater.py'
+# Inizializzazione database
+db = sqlite3.connect("config.db")
+c = db.cursor()
 
->>>>>>> cf778c513c18a768aa01917a22fd7700b0a58570
+# Table account
+
 try:
-	c.execute("SELECT email, password FROM account")
-	credentials = list(c.fetchall())
+	c.execute("SELECT email FROM account")
+	print('Row "email" and table "account" loaded!')
+except:
+	try:
+		c.execute("UPDATE account SET email = ? WHERE id = ? ", (None, 0))
+		db.commit()
+		print('Row "email" and table "account" loaded!')
+	except:
+		try:
+			c.execute("INSERT INTO account(email) VALUES(?)", (None))
+			db.commit()
+			print('Row "email" created and table "account" loaded!')
+		except:
+			c.execute("CREATE TABLE account(email TEXT, password TEXT, id INTEGER)")
+			db.commit()
+			c.execute("INSERT INTO account(email, password, id) VALUES(?,?,?)", (None, None, 0))
+			db.commit()
+			print('\nTable "account" created!')
+			print('Row "email" and table "account" loaded!')
 
+try:
+	c.execute("SELECT password FROM account")
+	print('Row "password" and table "account" loaded!')
+except:
+	try:
+		c.execute("UPDATE account SET password = ? WHERE id = ? ", (None, 0))
+		db.commit()
+		print('Row "password" and table "account" loaded!')
+	except:
+		try:
+			c.execute("INSERT INTO account(password) VALUES(?)", (None))
+			db.commit()
+			print('Row "password" created and table "account" loaded!')
+		except:
+			c.execute("CREATE TABLE account(email TEXT, password TEXT, id INTEGER)")
+			db.commit()
+			c.execute("INSERT INTO account(email, password, id) VALUES(?,?,?)", (None, None, 0))
+			db.commit()
+			print('\nTable "account" created!')
+			print('Row "password" and table "account" loaded!')
+
+try:
+	c.execute("SELECT id FROM account")
+	print('Row "id" and table "account" loaded!')
+except:
+	try:
+		c.execute("UPDATE account SET id = ? WHERE id = ? ", (None, 0))
+		db.commit()
+		print('Row "id" and table "account" loaded!')
+	except:
+		try:
+			c.execute("INSERT INTO account(id) VALUES(?)", (None))
+			db.commit()
+			print('Row "id" created and table "account" loaded!')
+		except:
+			c.execute("CREATE TABLE account(email TEXT, password TEXT, id INTEGER)")
+			db.commit()
+			c.execute("INSERT INTO account(email, password, id) VALUES(?,?,?)", (None, None, 0))
+			db.commit()
+			print('\nTable "account" created!')
+			print('Row "id" and table "account" loaded!')
+
+# Table settings
+
+try:
 	c.execute("SELECT language FROM settings")
-	language = list(c.fetchall())
-
-	c.execute("SELECT date_format, time_format FROM settings")
-	datetime_format = list(c.fetchall())
-
-	print('Database loaded succeful!')
-
-except sqlite3.OperationalError:
-	# Creazione delle nuove tables
-	print('A table or the database are missing: creating new one...')
+	print('Row "language" and table "settings" loaded!')
+except:
 	try:
-		c.execute("CREATE TABLE account(email TEXT, password TEXT, id INTEGER)")
+		c.execute("UPDATE account SET language = ? WHERE id = ? ", (str(locale.getdefaultlocale()), 0))
 		db.commit()
-	except sqlite3.OperationalError:
-		print('Table account already exist, skipping...')
-	try:
-		c.execute("CREATE TABLE settings(language TEXT, date_format INTEGER, time_format INTEGER, id INTEGER)")
-		db.commit()
-	except sqlite3.OperationalError:
-		print('Table settings already exist, skipping...')
-	c.execute("INSERT INTO settings(language, date_format, time_format, id) VALUES(?,?,?,?)", (str(locale.getdefaultlocale()), 1, 1, 0))
-	db.commit()
-	c.execute("INSERT INTO account(email, password, id) VALUES(?,?,?)", (None, None, 0))
-	db.commit()
+		print('Row "language" and table "settings" loaded!')
+	except:
+		try:
+			c.execute("INSERT INTO settings(language) VALUES(?)", (str(locale.getdefaultlocale())))
+			db.commit()
+			print('Row "language" and table "settings" loaded!')
+		except:
+			c.execute("CREATE TABLE settings(language TEXT, date_format INTEGER, time_format INTEGER, id INTEGER)")
+			db.commit()
+			c.execute("INSERT INTO settings(language, date_format, time_format, id) VALUES(?,?,?,?)", (str(locale.getdefaultlocale()), 1, 1, 0))
+			db.commit()
+			print('\nTable "settings" created!')
+			print('Row "language" and table "settings" loaded!')
 
-	if not os.path.isfile('version.txt'):
-		print('Created version file.')
-		with open('version.txt', 'w') as f:
-			f.write(version)
-			f.close()
+try:
+	c.execute("SELECT date_format FROM settings")
+	print('Row "date_format" and table "settings" loaded!')
+except:
+	try:
+		c.execute("UPDATE account SET date_format = ? WHERE id = ? ", (1, 0))
+		db.commit()
+		print('Row "date_format" and table "settings" loaded!')
+	except:
+		try:
+			c.execute("INSERT INTO settings(date_format) VALUES(?)", (1))
+			db.commit()
+			print('Row "date_format" and table "settings" loaded!')
+		except:
+			c.execute("CREATE TABLE settings(language TEXT, date_format INTEGER, time_format INTEGER, id INTEGER)")
+			db.commit()
+			c.execute("INSERT INTO settings(language, date_format, time_format, id) VALUES(?,?,?,?)", (str(locale.getdefaultlocale()), 1, 1, 0))
+			db.commit()
+			print('\nTable "settings" created!')
+			print('Row "date_format" and table "settings" loaded!')
+
+try:
+	c.execute("SELECT time_format FROM settings")
+	print('Row "time_format" and table "settings" loaded!')
+except:
+	try:
+		c.execute("UPDATE account SET time_format = ? WHERE id = ? ", (1, 0))
+		db.commit()
+		print('Row "time_format" and table "settings" loaded!')
+	except:
+		try:
+			c.execute("INSERT INTO settings(time_format) VALUES(?)", (1))
+			db.commit()
+			print('Row "time_format" and table "settings" loaded!')
+		except:
+			c.execute("CREATE TABLE settings(language TEXT, date_format INTEGER, time_format INTEGER, id INTEGER)")
+			db.commit()
+			c.execute("INSERT INTO settings(language, date_format, time_format, id) VALUES(?,?,?,?)", (str(locale.getdefaultlocale()), 1, 1, 0))
+			db.commit()
+			print('\nTable "settings" created!')
+			print('Row "time_format" and table "settings" loaded!')
+
+try:
+	c.execute("SELECT id FROM settings")
+	print('Row "id" and table "settings" loaded!')
+except:
+	try:
+		c.execute("UPDATE account SET id = ? WHERE id = ? ", (0, 0))
+		db.commit()
+		print('Row "id" and table "settings" loaded!')
+	except:
+		try:
+			c.execute("INSERT INTO settings(id) VALUES(?)", (0))
+			db.commit()
+			print('Row "id" and table "settings" loaded!')
+		except:
+			c.execute("CREATE TABLE settings(language TEXT, date_format INTEGER, time_format INTEGER, id INTEGER)")
+			db.commit()
+			c.execute("INSERT INTO settings(language, date_format, time_format, id) VALUES(?,?,?,?)", (str(locale.getdefaultlocale()), 1, 1, 0))
+			db.commit()
+			print('\nTable "settings" created!')
+			print('Row "id" and table "settings" loaded!')
 
 c.execute("SELECT email, password FROM account")
 credentials = list(c.fetchall())
 
 c.execute("SELECT language FROM settings")
 language = list(c.fetchall())
+
+c.execute("SELECT date_format, time_format FROM settings")
+datetime_format = list(c.fetchall())
+
+
+if not os.path.isfile('version.txt'):
+	print('\nCreated version file.')
+	with open('version.txt', 'w') as f:
+		f.write(version)
+		f.close()
+
+if not os.path.isdir("emails"):
+	os.makedirs("emails")
 
 if 'en' in language[0][0]:
 	with open("languages/en-EN.json", "r") as read_file:
@@ -108,9 +231,6 @@ else:
 	with open("languages/en-EN.json", "r") as read_file:
 		string = json.load(read_file)
 		langsel.set(1)
-
-c.execute("SELECT date_format, time_format FROM settings")
-datetime_format = list(c.fetchall())
 
 datesel.set(datetime_format[0][0])
 timesel.set(datetime_format[0][1])
@@ -153,12 +273,17 @@ def save_email(): # Salvataggio email
 	tosave.close()
 
 	print('Email saved!')
+	to_save = str(tosave.name)
+	f_ = os.path.basename(to_save)
+	fn = list(f_.split('.'))
+	window.title('Lite Mails {0} - {1}'.format(version, fn[0]))
 
 def open_email(): # Apertura emails
 	global toopen
 	toopen = filedialog.askopenfilename(initialdir="emails", title=string['open-email'], filetypes=[("E-Mail", "*.litemail")])
 	if toopen == '':
 		return
+
 	with open(toopen, 'r') as openedfile:
 		def clear():
 			dest_input.delete(0, 'end')
@@ -168,6 +293,8 @@ def open_email(): # Apertura emails
 			sub_input.insert(0, openedfile.readline(62).strip())
 			lines = openedfile.readlines()
 			msg_input.insert('1.0', (''.join(lines[0:-1])).strip())
+			fn = list(toopen.split('.'))
+			window.title('Lite Mails {0} - {1}'.format(version, os.path.basename(fn[0])))
 		if msg_input.get('1.0', 'end-1c') or destination.get() or subject.get():
 			quitquestion = messagebox.askyesnocancel(string['open-email'], string['quit-message'])
 			if quitquestion is True:
@@ -387,6 +514,39 @@ def add_date_time(date_or_time, format_=None): # Aggiunge la data corrente alla 
 	c.execute("SELECT date_format, time_format FROM settings")
 	datetime_format = list(c.fetchall())
 
+def new_mail():
+
+	def clear_for_new_mail():
+		toopen = None
+		tosave = None
+		file = None
+		dest_input.delete(0, 'end')
+		sub_input.delete(0, 'end')
+		msg_input.delete('1.0', 'end')
+		window.title('Lite Mails {}'.format(version))
+
+	if toopen:
+		if msg_input.get('1.0', 'end-1c') and destination.get() and subject.get() in open(toopen, 'r').read():
+			clear_for_new_mail()
+		else:
+			quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
+			if quitquestion is True:
+				save_email()
+			elif quitquestion is False:
+				clear_for_new_mail()
+			elif quitquestion is None:
+				pass
+	elif msg_input.get('1.0', 'end-1c') or destination.get() or subject.get():
+		quitquestion = messagebox.askyesnocancel(string['quit'], string['quit-message'])
+		if quitquestion is True:
+			save_email()
+		elif quitquestion is False:
+			clear_for_new_mail()
+		elif quitquestion is None:
+			pass
+	else:
+		clear_for_new_mail()
+
 def send_email(): # Funzione per inviare la mail
 
 	c.execute("SELECT email, password FROM account")
@@ -467,6 +627,7 @@ menu_mail = Menu(menu_bar, tearoff=0)
 
 menu_bar.add_cascade(label=string['mail'], menu=menu_mail)
 
+menu_mail.add_command(label=string['new-mail'], command=lambda: new_mail())
 menu_mail.add_command(label=string['save-email'], command=lambda: save_email())
 menu_mail.add_command(label=string['open-email'], command=lambda: open_email())
 
