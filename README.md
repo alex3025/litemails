@@ -7,7 +7,7 @@ Lite Mails is a program that can send e-mail with attachments.
 * Fixed bugs
 * Added "Utility" menu which you can insert date/time on the mail
 
-### Code Release v1.3
+### Code Update v1.3
 * Fixed bugs
 * Added to updater things (OPTIONAL: If you want install new modifies reinstall Lite Mails)
 
